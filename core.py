@@ -36,3 +36,12 @@ def yields_to_rtn_index(yld):
 def get_bond_time_series():
 	yld=q.get("FRED/DGS10", authtoken=token).Value
 	return yields_to_rtn_index(yld.resample(rule='m').last())
+
+def get_sp():
+    return q.get('MULTPL/SP500_REAL_PRICE_MONTH' , authtoken=token).Value.resample(rule='m').last()
+
+# Has data only until November 2018.  Come on quandl!!!
+def get_libor():
+    return q.get("ECB/RTD_M_S0_N_C_USL3M_U", authtoken=token)['Percent per annum']
+
+
