@@ -26,12 +26,11 @@ def yields_to_rtn_index(yld):
     s = pd.Series()
     last=4.06
     for timestamp,yi in yld.iteritems():
-        interest = yi/1200.
-        np.pv(0.0403,10,4.06,fv=100)
+        interest = last/12.
         change=np.pv(yi/100.,10,-last,fv=-100)-100
         last=yi
         s[timestamp]=change+interest
-    return s
+    return s/100.
 
 # time series of bond returns
 def get_bond_time_series():
