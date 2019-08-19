@@ -44,4 +44,14 @@ def get_sp():
 def get_libor():
     return q.get("ECB/RTD_M_S0_N_C_USL3M_U", authtoken=token)['Percent per annum']
 
+def flatten(data):
+    q=[]
+    for i in data:
+        q.append(1 if i>0 else 0)
+    return np.array(q)
 
+def calc_IR(prediction,returns,N=12):
+    rets=pd.Series(prediction)*pd.Series(returns)
+    annual_ret=(rets+1).cumprod().iloc[-1]**(1/(prediction.size/12))-1
+    stds=rets.std()*sqrt(N)
+    return annual_ret/stds
