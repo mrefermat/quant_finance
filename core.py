@@ -8,6 +8,9 @@ token="Us3wFmXGgAj_1cUtHAAR"
 def calc_Sharpe(pnl,N=12):
     return np.sqrt(N) * pnl.mean() / pnl.std()
 
+def get_sp_future():
+    return q.get("CHRIS/CME_SP1", authtoken=token).resample(rule='d').last().Last.dropna()
+
 # Simple 50/50 risk parity calculation based on S&P 500 / US Treasuries
 def calc_risk_parity(vol=.1,lookback=36):
     df=pd.DataFrame()
